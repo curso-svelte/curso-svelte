@@ -1,18 +1,15 @@
 <script>
   import { store } from '../store';
   import { fade } from 'svelte/transition';
-
   function closeSnackbar () {
     store.update(state => ({
       ...state,
-      title: null,
+      show: null,
       type: null,
-      show: false
+      title: null
     }));
   }
-
 </script>
-
 
 <style>
   .snackbar {
@@ -28,7 +25,6 @@
     flex-direction: row;
     padding: 15px;
   }
-
   .success {
     background: var(--success);
   }
@@ -36,7 +32,6 @@
   .error {
     background: var(--error);
   }
-
   span {
     color: var(--white);
     flex-grow: 3;
@@ -51,8 +46,8 @@
     font-size: 1rem;
     user-select: none;
   }
-</style>
 
+</style>
 
 <div>
   {#if $store.show}
