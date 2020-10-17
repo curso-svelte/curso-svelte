@@ -43,7 +43,6 @@
 			});
 			data = response;
 			const first = data[0];
-	
 			store.update(state => ({
 				...state,
 				id: first.id,
@@ -51,9 +50,6 @@
 				title: first.title,
 				trailer: first.trailer
 			}));
-	
-			console.log(response);
-			
 		} catch (error) {
 			store.update(state => ({
 				...state,

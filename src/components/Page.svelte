@@ -66,7 +66,6 @@
 
 </style>
 
-
 <div class="Portada">
   <div class="background" style="background: url({$store.url}) no-repeat;">
     <div class="Portada-container">

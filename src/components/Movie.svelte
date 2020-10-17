@@ -11,7 +11,6 @@
   }
 </script>
 
-
 <style>
   .Movie {
     padding: 0;

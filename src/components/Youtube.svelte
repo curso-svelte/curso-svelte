@@ -11,7 +11,6 @@
   }
 </style>
 
-
 <div transition:fade>
   {#if $store.youtube}
     <iframe
