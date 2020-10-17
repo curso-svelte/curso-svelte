@@ -3,11 +3,11 @@ import { writable } from 'svelte/store';
 const state = {
   id: null,
   url: null,
-  title: null,
   message: null,
-  type: null,
-  show: null,
-  trailer: null,
+  title: null, // Texto que se va a mostrar
+  type: null, // success o error
+  show: null, // true o false
+  trailer: null,  // mnBDtygsh1158
   trailerActive: null,
   youtube: null
 };
