@@ -1,9 +1,28 @@
 <script>
+	import { onMount, onDestroy } from 'svelte';
+	import { fly } from 'svelte/transition';
+	import { store } from './store';
+	import Article from './components/Article.svelte';
+
 	let data = [];
 	const API_KEY = 'f3abb031';
 	const query = 'avengers';
 	
-	(async() => {
+	let contador = 1;
+
+	const params = {
+		API_KEY,
+		query,
+		contador,
+		data
+	};
+
+	let miRepeticion;
+	onMount(async() => {
+		// miRepeticion = setInterval(() => {
+		// 	console.log('Repitiendo');
+		// 	contador += 1;
+		// }, 1000);
 		let response = await fetch(`http://www.omdbapi.com/?s=${query}&apikey=${API_KEY}&plot=full`);
 		response = await response.json();
 		response = [...response.Search].reduce((container, item) => {
@@ -15,8 +34,36 @@
 			container.push(objMovie);
 			return container;
 		}, []);
+		data = response;
+		const first = data[0];
+
+		store.update(state => ({
+			...state,
+			id: first.id,
+			url: first.url,
+			title: first.title
+		}));
+
+
+		console.log('Cargando datos desde el onMount');
 		console.log(response);
-	})();
+	});
+
+	onDestroy(() => {
+		clearInterval(miRepeticion);
+	});
+
+	const increment = () => {
+		contador += 1;
+		console.log('Click');
+	};
+
+	const decrement = () => {
+		contador -= 1;
+	};
+
+	$: esCinco = contador * 2;
+
 </script>
 
 <style>
@@ -137,14 +184,23 @@
 <main>
 	<div class="loader-container">
 		<div class="loader">
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
+			{#each new Array(8) as miDiv}
+				<div></div>
+			{/each}
 		</div>
+		<!-- <button on:click={increment}>+</button>
+		<button on:click={decrement}>-</button>
+		{ `${contador}, esCinco: ${esCinco}` } -->
+
+		{#if contador === 7 || contador === 8 || contador === 12}
+			<div transition:fly="{{ y: 200, duration: 2000 }}">
+				<Article {...params} on:click={increment}/>
+			</div>
+		 {:else if 2 === 3}
+			<div>Es igual a 2</div>
+		 {:else}
+		  <div>Todo es falso</div>
+		{/if}
+
 	</div>
 </main>
